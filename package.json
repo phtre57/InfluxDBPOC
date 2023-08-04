@@ -1,0 +1,24 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "query": "export ENV_NAME=LOCAL && tsx ./src/query.ts",
+    "seed": "export ENV_NAME=LOCAL && tsx ./src/seed.ts"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^8.0.2",
+    "@influxdata/influxdb-client": "^1.33.2",
+    "@sailplane/injector": "^4.0.0-alpha.1",
+    "@sailplane/logger": "^4.2.0",
+    "bottlejs": "^2.0.1"
+  },
+  "devDependencies": {
+    "tsx": "^3.12.7"
+  },
+  "volta": {
+    "node": "18.15.0",
+    "yarn": "1.22.19"
+  }
+}
