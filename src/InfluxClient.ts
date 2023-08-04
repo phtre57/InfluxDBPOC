@@ -45,6 +45,21 @@ export class InfluxClient {
       logger.info('Error writing', e)
     }
   }
+
+  async getNumberOfTicketsSoldInBetween(eventId: string, from: string, to: string): Promise<string> {
+    const queryClient = this.client.getQueryApi('local')
+
+    const query = `from(bucket: "tickets_sold")
+      |> range(start: ${from}, stop: ${to})
+      |> filter(fn: (r) => r["_measurement"] == "_measurement" or r["_measurement"] == "numberOfTicketSold")
+      |> filter(fn: (r) => r["_field"] == "value")
+      |> filter(fn: (r) => r["eventId"] == "${eventId}")
+      |> aggregateWindow(every: 1m, fn: mean, createEmpty: false)
+      |> cumulativeSum(columns: ["_value"])
+    `
+
+    return queryClient.queryRaw(query)
+  }
 }
 
 const create = () => {
